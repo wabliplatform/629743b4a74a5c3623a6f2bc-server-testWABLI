@@ -1,0 +1,170 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: lampralexandros@gmail.com
+  description: This is a sample openApi document
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://wabli.netlify.app/
+  title: TempApi
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- description: local-host
+  url: http://localhost:8090/v1
+security:
+- {}
+tags:
+- description: not yet ready
+  name: article
+paths:
+  /article:
+    post:
+      operationId: createarticle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/article'
+        description: data to be created
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/article'
+          description: successful operation
+      summary: Creates the data
+      tags:
+      - article
+      x-eov-operation-handler: controllers/ArticleController
+  /article/{articleId}:
+    delete:
+      operationId: deletearticle
+      parameters:
+      - description: the Id parameter
+        explode: false
+        in: path
+        name: articleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: successful operation
+      summary: Delete the element
+      tags:
+      - article
+      x-eov-operation-handler: controllers/ArticleController
+    get:
+      operationId: getarticle
+      parameters:
+      - description: the Id parameter
+        explode: false
+        in: path
+        name: articleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/article'
+          description: successful operation
+      summary: Get the element
+      tags:
+      - article
+      x-eov-operation-handler: controllers/ArticleController
+    put:
+      operationId: updatearticle
+      parameters:
+      - description: the Id parameter
+        explode: false
+        in: path
+        name: articleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/article'
+        description: data to be updated
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/article'
+          description: successful operation
+      summary: Updates the element
+      tags:
+      - article
+      x-eov-operation-handler: controllers/ArticleController
+  /article/getAll:
+    get:
+      operationId: getAllarticle
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/article'
+                type: array
+          description: successful operation
+      summary: Get all the data
+      tags:
+      - article
+      x-method-getAll: "true"
+      x-eov-operation-handler: controllers/ArticleController
+components:
+  schemas:
+    article:
+      example:
+        articleTitle: articleTitle
+        articleImage:
+          data: data
+          name: name
+        articlePost: articlePost
+        articleDate: 2000-01-23
+        _id: _id
+      properties:
+        _id:
+          type: string
+        articleImage:
+          $ref: '#/components/schemas/article_articleImage'
+        articleTitle:
+          type: string
+        articleDate:
+          format: date
+          type: string
+        articlePost:
+          type: string
+      required:
+      - articleDate
+      - articleImage
+      - articlePost
+      - articleTitle
+      type: object
+    article_articleImage:
+      example:
+        data: data
+        name: name
+      properties:
+        data:
+          type: string
+        name:
+          type: string
+      type: object
+      x-isSchemaOnly: "true"
